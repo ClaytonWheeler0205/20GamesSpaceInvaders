@@ -1,3 +1,4 @@
+using Game.Bullet;
 using Godot;
 using System;
 
@@ -19,6 +20,18 @@ namespace Game.Player
                 if (value != null)
                 {
                     _shipToControl = value;
+                }
+            }
+        }
+        private Projectile _shipProjectile;
+        public Projectile ShipProjectile
+        {
+            get { return _shipProjectile;}
+            set
+            {
+                if (value != null)
+                {
+                    _shipProjectile = value;
                 }
             }
         }

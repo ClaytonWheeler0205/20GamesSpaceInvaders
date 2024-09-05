@@ -20,5 +20,17 @@ namespace Game.Player
                 }
             }
         }
+
+        public override void _UnhandledInput(InputEvent @event)
+        {
+            if (IsControllerActive)
+            {
+                if (@event.IsActionPressed("fire") && ShipProjectile.IsValid() && !ShipProjectile.IsActive)
+                {
+                    ShipProjectile.SetBulletPosition(ShipToControl.Position);
+                    ShipProjectile.FireProjectile();
+                }
+            }
+        }
     }
 }

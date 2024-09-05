@@ -13,6 +13,7 @@ namespace Game.Player
         public override void _Ready()
         {
             _startPosition = Position;
+            Visible = false;
         }
 
         //  // Called every frame. 'delta' is the elapsed time since the previous frame.
