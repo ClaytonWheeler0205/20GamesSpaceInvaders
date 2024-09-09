@@ -7,7 +7,7 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 2, 8 )
 
-[node name="PlayerMissile" type="Area2D"]
+[node name="PlayerMissile" type="Area2D" groups=["Missile"]]
 z_index = -1
 script = ExtResource( 2 )
 _projectileSpeed = 1000.0
@@ -25,4 +25,5 @@ scale = Vector2( 0.2, 0.8 )
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 script = ExtResource( 3 )
 
+[connection signal="area_entered" from="." to="." method="OnMissileAreaEntered"]
 [connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="OnScreenExit"]

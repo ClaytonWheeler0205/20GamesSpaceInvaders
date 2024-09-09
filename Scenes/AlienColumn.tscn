@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Scenes/Alien1.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Alien2.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Alien3.tscn" type="PackedScene" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 24, 96 )
+
+[node name="AlienColumn" type="Area2D"]
+collision_layer = 16
+collision_mask = 32
+
+[node name="Aliens" type="Node2D" parent="."]
+
+[node name="Alien3" parent="Aliens" instance=ExtResource( 3 )]
+
+[node name="Alien1" parent="Aliens" instance=ExtResource( 1 )]
+position = Vector2( 0, 40 )
+
+[node name="Alien2" parent="Aliens" instance=ExtResource( 1 )]
+position = Vector2( 0, 80 )
+
+[node name="Alien4" parent="Aliens" instance=ExtResource( 2 )]
+position = Vector2( 0, 120 )
+
+[node name="Alien5" parent="Aliens" instance=ExtResource( 2 )]
+position = Vector2( 0, 160 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 80 )
+shape = SubResource( 1 )
