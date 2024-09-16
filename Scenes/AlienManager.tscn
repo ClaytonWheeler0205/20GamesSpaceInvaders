@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scenes/AlienInvaders.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scripts/Game/AlienManager.cs" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 24, 300 )
+
+[node name="AlienManager" type="Node"]
+script = ExtResource( 2 )
+
+[node name="AlienInvaders" parent="." instance=ExtResource( 1 )]
+position = Vector2( 0, -225 )
+
+[node name="MovementTimer" type="Timer" parent="."]
+
+[node name="Edge" type="Area2D" parent="." groups=["Edge"]]
+position = Vector2( 488, 0 )
+collision_layer = 32
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Edge"]
+position = Vector2( 0, 7.62939e-06 )
+shape = SubResource( 1 )
+
+[node name="Edge2" type="Area2D" parent="." groups=["Edge"]]
+position = Vector2( -488, 0 )
+collision_layer = 32
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Edge2"]
+position = Vector2( 0, 7.62939e-06 )
+shape = SubResource( 1 )
+
+[connection signal="timeout" from="MovementTimer" to="." method="OnMovementTimerTimeout"]

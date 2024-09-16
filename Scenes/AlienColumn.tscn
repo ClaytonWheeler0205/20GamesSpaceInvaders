@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scenes/Alien1.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Alien2.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/Alien3.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scripts/Alien/AlienColumn.cs" type="Script" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 24, 96 )
@@ -10,6 +11,7 @@ extents = Vector2( 24, 96 )
 [node name="AlienColumn" type="Area2D"]
 collision_layer = 16
 collision_mask = 32
+script = ExtResource( 4 )
 
 [node name="Aliens" type="Node2D" parent="."]
 
@@ -30,3 +32,5 @@ position = Vector2( 0, 160 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 80 )
 shape = SubResource( 1 )
+
+[connection signal="area_entered" from="." to="." method="OnColumnAreaEntered"]

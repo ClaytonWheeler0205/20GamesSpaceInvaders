@@ -16,10 +16,33 @@ namespace Game
         // Called when the node enters the scene tree for the first time.
         public override void _Ready()
         {
+            SetNodeReferences();
+            CheckNodeReferences();
+
+            StartGame();
+        }
+
+        private void SetNodeReferences()
+        {
             _shipController = GetNode<ShipController>("PlayerController");
             _playerShip = GetNode<ShipBase>("PlayerShip");
             _playerMissile = GetNode<Projectile>("PlayerMissile");
-            StartGame();
+        }
+
+        private void CheckNodeReferences()
+        {
+            if (!_shipController.IsValid())
+            {
+                GD.PrintErr("ERROR: Ship controller node is not valid!");
+            }
+            if (!_playerShip.IsValid())
+            {
+                GD.PrintErr("ERROR: Player shipt node is not valid!");
+            }
+            if (!_playerMissile.IsValid())
+            {
+                GD.PrintErr("ERROR: Player missile node is not valid!");
+            }
         }
 
         public bool StartGame()
@@ -45,7 +68,7 @@ namespace Game
                     return false;
                 }
             }
-            else 
+            else
             {
                 return false;
             }

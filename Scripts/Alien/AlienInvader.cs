@@ -17,12 +17,16 @@ namespace Game.Alien
         // Called when the node enters the scene tree for the first time.
         public override void _Ready()
         {
+            SetNodeReferences();
+            CheckNodeReferences();
+            IsActive = true;
+        }
+
+        private void SetNodeReferences()
+        {
             _alienSprite = GetNode<AnimatedSprite>("AnimatedSprite");
             _alienCollision = GetNode<CollisionShape2D>("CollisionShape2D");
             _alienDetector = GetNode<RayCast2D>("RayCast2D");
-
-            CheckNodeReferences();
-            IsActive = true;
         }
 
         private void CheckNodeReferences()
@@ -53,6 +57,10 @@ namespace Game.Alien
             }
         }
 
+        /// <summary>
+        /// Sets the alien's active state, which includes the collision and visibility.
+        /// </summary>
+        /// <param name="newActiveState">True if the alien is to be visible and have active collision. False if otherwise.</param>
         public override void SetActive(bool newActiveState)
         {
             IsActive = newActiveState;
