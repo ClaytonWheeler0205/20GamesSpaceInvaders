@@ -1,4 +1,5 @@
 using Game.Alien;
+using Game.SFX;
 using Godot;
 using System;
 
@@ -9,6 +10,7 @@ namespace Game
     {
         private InvasionBase _alienInvaders;
         private Timer _movementTimer;
+        private AudioPlayer _movementSoundPlayer;
 
         // Called when the node enters the scene tree for the first time.
         public override void _Ready()
@@ -21,6 +23,7 @@ namespace Game
         {
             _alienInvaders = GetNode<InvasionBase>("AlienInvaders");
             _movementTimer = GetNode<Timer>("MovementTimer");
+            _movementSoundPlayer = GetNode<AudioPlayer>("MovementSoundPlayer");
         }
 
         public bool StartGame()
@@ -36,8 +39,13 @@ namespace Game
 
         public void OnMovementTimerTimeout()
         {
-            _alienInvaders.Move();
-            _movementTimer.Start(_alienInvaders.AliensCount / 60.0f);
+            if (_alienInvaders.AliensCount > 0)
+            {
+                _alienInvaders.Move();
+                // Play movement sound
+                _movementSoundPlayer.PlaySound("move");
+                _movementTimer.Start(_alienInvaders.AliensCount / 60.0f);
+            }
         }
     }
 }
