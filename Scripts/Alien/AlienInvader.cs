@@ -10,9 +10,12 @@ namespace Game.Alien
         private AnimatedSprite _alienSprite;
         private CollisionShape2D _alienCollision;
         private RayCast2D _alienDetector;
+        private AudioStreamPlayer _audioStreamPlayer;
 
         private const string ALIEN_NODE_GROUP = "Alien";
         private const string MISSILE_NODE_GROUP = "Missile";
+
+        private PackedScene _alienExplosionVFX = GD.Load<PackedScene>("res://Scenes/AlienExplosion.tscn");
 
         // Called when the node enters the scene tree for the first time.
         public override void _Ready()
@@ -27,6 +30,7 @@ namespace Game.Alien
             _alienSprite = GetNode<AnimatedSprite>("AnimatedSprite");
             _alienCollision = GetNode<CollisionShape2D>("CollisionShape2D");
             _alienDetector = GetNode<RayCast2D>("RayCast2D");
+            _audioStreamPlayer = GetNode<AudioStreamPlayer>("AudioStreamPlayer");
         }
 
         private void CheckNodeReferences()
@@ -42,6 +46,10 @@ namespace Game.Alien
             if (!_alienDetector.IsValid())
             {
                 GD.PrintErr("ERROR: Alien detector node is not valid!");
+            }
+            if (!_audioStreamPlayer.IsValid())
+            {
+                GD.PrintErr("ERROR: Audio stream player node is not valid!");
             }
         }
 
@@ -106,8 +114,17 @@ namespace Game.Alien
             if (area.IsInGroup(MISSILE_NODE_GROUP))
             {
                 SetActive(false);
+                PlayExplosionEffect();
+                _audioStreamPlayer.Play();
                 EmitSignal("AlienDestroyed");
             }
+        }
+
+        private void PlayExplosionEffect()
+        {
+            Node2D particleEffect = _alienExplosionVFX.Instance<Node2D>();
+            particleEffect.GlobalPosition = GlobalPosition;
+            GetNode("/root").AddChild(particleEffect);
         }
     }
 }
