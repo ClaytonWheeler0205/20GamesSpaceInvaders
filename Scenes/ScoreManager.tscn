@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Fonts/ScoreText.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Scripts/UI/ScoreManager.cs" type="Script" id=2]
+
+[node name="ScoreManager" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+
+[node name="ScoreLabel" type="Label" parent="."]
+margin_left = 16.0
+margin_top = 8.0
+margin_right = 268.0
+margin_bottom = 49.0
+custom_fonts/font = ExtResource( 1 )
+text = "Score: 0000"

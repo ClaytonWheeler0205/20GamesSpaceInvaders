@@ -11,7 +11,7 @@ extents = Vector2( 24, 300 )
 script = ExtResource( 2 )
 
 [node name="AlienInvaders" parent="." instance=ExtResource( 1 )]
-position = Vector2( 0, -225 )
+position = Vector2( 0, -185 )
 
 [node name="MovementTimer" type="Timer" parent="."]
 

@@ -10,7 +10,7 @@ namespace Game.Alien
         private const int ALIEN_INVASION_SIZE = 55;
 
         private const float DELTA_X = 16f;
-        private const float DELTA_Y = 40f;
+        private const float DELTA_Y = 20f;
 
         private Godot.Collections.Array<ColumnBase> _alienColumns;
 

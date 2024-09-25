@@ -1,3 +1,4 @@
+using Game.Bus;
 using Godot;
 using System;
 using Util.ExtensionMethods;
@@ -7,6 +8,9 @@ namespace Game.Alien
 
     public class AlienInvader : AlienBase
     {
+        [Export]
+        private int _pointValue;
+
         private AnimatedSprite _alienSprite;
         private CollisionShape2D _alienCollision;
         private RayCast2D _alienDetector;
@@ -117,6 +121,7 @@ namespace Game.Alien
                 PlayExplosionEffect();
                 _audioStreamPlayer.Play();
                 EmitSignal("AlienDestroyed");
+                ScoreEventBus.Instance.EmitSignal("AwardPoints", _pointValue);
             }
         }
 

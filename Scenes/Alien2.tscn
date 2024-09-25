@@ -11,6 +11,7 @@ extents = Vector2( 24, 16 )
 collision_layer = 4
 collision_mask = 3
 script = ExtResource( 2 )
+_pointValue = 10
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = ExtResource( 1 )
