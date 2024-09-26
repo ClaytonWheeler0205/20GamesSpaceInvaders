@@ -12,7 +12,7 @@ script = ExtResource( 3 )
 script = ExtResource( 2 )
 
 [node name="PlayerShip" parent="." instance=ExtResource( 1 )]
-position = Vector2( 0, 220 )
+position = Vector2( -445, 220 )
 _minXValue = -475.0
 _maxXValue = 475.0
 

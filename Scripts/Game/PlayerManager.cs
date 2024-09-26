@@ -18,8 +18,6 @@ namespace Game
         {
             SetNodeReferences();
             CheckNodeReferences();
-
-            StartGame();
         }
 
         private void SetNodeReferences()

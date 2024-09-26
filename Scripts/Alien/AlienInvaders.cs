@@ -23,6 +23,8 @@ namespace Game.Alien
         }
         private MovementState _currentMovementState;
 
+        private Vector2 _alienStartingPosition;
+
         public override void _Ready()
         {
             SetAliensCount(ALIEN_INVASION_SIZE);
@@ -32,6 +34,7 @@ namespace Game.Alien
             SetColumnConnections();
 
             _currentMovementState = MovementState.Right;
+            _alienStartingPosition = GlobalPosition;
         }
 
         private void ConstructAlienColumnsArray()
@@ -71,6 +74,22 @@ namespace Game.Alien
         {
             MoveAliens();
             AnimateAliens();
+        }
+
+        public override void ResetInvasion()
+        {
+            SetAliensCount(ALIEN_INVASION_SIZE);
+            ResetColumns();
+            _currentMovementState = MovementState.Right;
+            GlobalPosition = _alienStartingPosition;
+        }
+
+        private void ResetColumns()
+        {
+            foreach (ColumnBase column in _alienColumns)
+            {
+                column.SetActiveStatus(true);
+            }
         }
 
         private void MoveAliens()

@@ -14,6 +14,7 @@ script = ExtResource( 2 )
 position = Vector2( 0, -185 )
 
 [node name="MovementTimer" type="Timer" parent="."]
+one_shot = true
 
 [node name="Edge" type="Area2D" parent="." groups=["Edge"]]
 position = Vector2( 488, 0 )

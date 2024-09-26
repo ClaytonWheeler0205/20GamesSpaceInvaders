@@ -10,6 +10,8 @@ namespace Game.Alien
 
         public abstract void Move();
 
+        public abstract void ResetInvasion();
+
         protected void SetAliensCount(int count)
         {
             _aliensCount = count;

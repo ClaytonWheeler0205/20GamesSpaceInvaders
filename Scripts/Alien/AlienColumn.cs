@@ -37,10 +37,10 @@ namespace Game.Alien
                     AlienBase alien = aliensNode.GetChild(i) as AlienBase;
                     if (alien.IsValid())
                     {
-                        _aliens.Add(alien);
-                        _aliensCount++;
+                        _aliens.Add(alien); 
                     }
                 }
+                _aliensCount = _aliens.Count;
             }
             else
             {
@@ -102,11 +102,17 @@ namespace Game.Alien
 
             if (IsActive)
             {
+                _aliensCount = _aliens.Count;
                 _columnCollision.SetDeferred("disabled", false);
             }
             else
             {
                 _columnCollision.SetDeferred("disabled", true);
+            }
+
+            foreach (AlienBase alien in _aliens)
+            {
+                alien.SetActive(newActiveState);
             }
         }
 

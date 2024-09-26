@@ -12,11 +12,14 @@ namespace Game
         private Timer _movementTimer;
         private AudioPlayer _movementSoundPlayer;
 
+        [Signal]
+        public delegate void AliensCleared();
+
         // Called when the node enters the scene tree for the first time.
         public override void _Ready()
         {
             SetNodeReferences();
-            StartGame();
+            _alienInvaders.Visible = false;
         }
 
         private void SetNodeReferences()
@@ -28,12 +31,15 @@ namespace Game
 
         public bool StartGame()
         {
+            _alienInvaders.Visible = true;
             _movementTimer.Start(_alienInvaders.AliensCount / 60.0f);
             return true;
         }
 
         public bool EndGame()
         {
+            _alienInvaders.Visible = false;
+            _alienInvaders.ResetInvasion();
             return true;
         }
 
@@ -42,9 +48,12 @@ namespace Game
             if (_alienInvaders.AliensCount > 0)
             {
                 _alienInvaders.Move();
-                // Play movement sound
                 _movementSoundPlayer.PlaySound("move");
                 _movementTimer.Start(_alienInvaders.AliensCount / 60.0f);
+            }
+            else
+            {
+                EmitSignal(nameof(AliensCleared));
             }
         }
     }
