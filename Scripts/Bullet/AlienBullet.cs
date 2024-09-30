@@ -11,6 +11,9 @@ namespace Game.Bullet
         private AnimatedSprite _bulletSprite;
 
         private const string PLAYER_NODE_GROUP = "Player";
+        private const string MISSILE_NODE_GROUP = "Missile";
+
+        private PackedScene _bulletExplosionVFX = GD.Load<PackedScene>("res://Scenes/BulletExplosion.tscn");
 
         // Called when the node enters the scene tree for the first time.
         public override void _Ready()
@@ -42,6 +45,13 @@ namespace Game.Bullet
         {
             if (area.IsInGroup(PLAYER_NODE_GROUP))
             {
+                ResetProjectile();
+            }
+            else if (area.IsInGroup(MISSILE_NODE_GROUP))
+            {
+                Node2D particleEffect = _bulletExplosionVFX.Instance<Node2D>();
+                particleEffect.GlobalPosition = GlobalPosition;
+                GetNode("/root").AddChild(particleEffect);
                 ResetProjectile();
             }
         }

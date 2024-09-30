@@ -4,9 +4,11 @@
 [ext_resource path="res://Scripts/Bullet/AlienBullet.cs" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 2, 8 )
+extents = Vector2( 4, 16 )
 
 [node name="SquiggleShot" type="Area2D" groups=["Bullet"]]
+collision_layer = 8
+collision_mask = 3
 script = ExtResource( 2 )
 _projectileSpeed = 334.0
 
@@ -17,8 +19,8 @@ frames = ExtResource( 1 )
 shape = SubResource( 1 )
 
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
-position = Vector2( 4.76837e-07, 4.17233e-07 )
-scale = Vector2( 0.2, 0.8 )
+position = Vector2( -2.38419e-07, 1.66893e-06 )
+scale = Vector2( 0.4, 1.6 )
 
 [connection signal="area_entered" from="." to="." method="OnBulletAreaEntered"]
 [connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="OnScreenExit"]
