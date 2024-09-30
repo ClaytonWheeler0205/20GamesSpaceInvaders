@@ -1,7 +1,9 @@
 using Game.Alien;
+using Game.Bullet;
 using Game.SFX;
 using Godot;
 using System;
+using Util.ExtensionMethods;
 
 namespace Game
 {
@@ -11,6 +13,7 @@ namespace Game
         private InvasionBase _alienInvaders;
         private Timer _movementTimer;
         private AudioPlayer _movementSoundPlayer;
+        private BulletManagerBase _bulletManager;
 
         [Signal]
         public delegate void AliensCleared();
@@ -19,6 +22,10 @@ namespace Game
         public override void _Ready()
         {
             SetNodeReferences();
+            if (_bulletManager.IsValid())
+            {
+                _bulletManager.SetAlienInvaders(_alienInvaders);
+            }
             _alienInvaders.Visible = false;
         }
 
@@ -27,6 +34,7 @@ namespace Game
             _alienInvaders = GetNode<InvasionBase>("AlienInvaders");
             _movementTimer = GetNode<Timer>("MovementTimer");
             _movementSoundPlayer = GetNode<AudioPlayer>("MovementSoundPlayer");
+            _bulletManager = GetNode<BulletManagerBase>("BulletManager");
         }
 
         public bool StartGame()
@@ -40,6 +48,7 @@ namespace Game
         {
             _alienInvaders.Visible = false;
             _alienInvaders.ResetInvasion();
+            _bulletManager.ResetShots();
             return true;
         }
 
@@ -47,6 +56,7 @@ namespace Game
         {
             if (_alienInvaders.AliensCount > 0)
             {
+                _bulletManager.Fire();
                 _alienInvaders.Move();
                 _movementSoundPlayer.PlaySound("move");
                 _movementTimer.Start(_alienInvaders.AliensCount / 60.0f);

@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scenes/AlienInvaders.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/Game/AlienManager.cs" type="Script" id=2]
 [ext_resource path="res://Scripts/SFX/MovementSoundPlayer.cs" type="Script" id=3]
+[ext_resource path="res://Scenes/BulletManager.tscn" type="PackedScene" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 24, 300 )
@@ -36,5 +37,7 @@ shape = SubResource( 1 )
 
 [node name="MovementSoundPlayer" type="AudioStreamPlayer" parent="."]
 script = ExtResource( 3 )
+
+[node name="BulletManager" parent="." instance=ExtResource( 4 )]
 
 [connection signal="timeout" from="MovementTimer" to="." method="OnMovementTimerTimeout"]

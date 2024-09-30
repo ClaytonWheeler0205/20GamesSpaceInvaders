@@ -13,6 +13,17 @@ namespace Game.Bullet
         // Member variables
         [Export]
         private float _projectileSpeed = 300.0f;
+        public float ProjectileSpeed
+        {
+            get { return _projectileSpeed; }
+            set
+            {
+                if (value > 0)
+                {
+                    _projectileSpeed = value;
+                }
+            }
+        }
         private float _projectileDirection = 0;
         protected float ProjectileDirection
         {
@@ -56,7 +67,7 @@ namespace Game.Bullet
             Visible = true;
         }
 
-        protected virtual void ResetProjectile()
+        public virtual void ResetProjectile()
         {
             _isActive = false;
             Position = _startingPosition;

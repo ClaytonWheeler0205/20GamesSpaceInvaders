@@ -83,6 +83,14 @@ namespace Game
             {
                 return false;
             }
+            if (_playerShip.IsValid())
+            {
+                _playerShip.SetDirection(0);
+            }
+            else
+            {
+                return false;
+            }
             return true;
         }
     }

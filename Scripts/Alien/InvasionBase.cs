@@ -12,6 +12,8 @@ namespace Game.Alien
 
         public abstract void ResetInvasion();
 
+        public abstract ColumnBase GetRandomActiveColumn();
+
         protected void SetAliensCount(int count)
         {
             _aliensCount = count;

@@ -92,6 +92,34 @@ namespace Game.Alien
             }
         }
 
+        public override ColumnBase GetRandomActiveColumn()
+        {
+            GD.Randomize();
+            ColumnBase activeColumn = null;
+            // check if there is an active column
+            if (ActiveColumnPresent())
+            {
+                do
+                {
+                    int randomIndex = (int)(GD.Randi() % _alienColumns.Count);
+                    activeColumn = _alienColumns[randomIndex];
+                } while (activeColumn == null || !activeColumn.IsActive);
+            }
+            return activeColumn;
+        }
+
+        private bool ActiveColumnPresent()
+        {
+            foreach (ColumnBase column in _alienColumns)
+            {
+                if (column.IsValid() && column.IsActive)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private void MoveAliens()
         {
             Vector2 newPosition = GlobalPosition;
@@ -117,7 +145,7 @@ namespace Game.Alien
 
         private void AnimateAliens()
         {
-            
+
             foreach (ColumnBase alienColumn in _alienColumns)
             {
                 if (alienColumn.IsValid() && alienColumn.IsActive)
