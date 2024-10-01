@@ -1,3 +1,4 @@
+using Game.Bus;
 using Game.SFX;
 using Godot;
 using System;
@@ -16,6 +17,7 @@ namespace Game.Bullet
         // Called when the node enters the scene tree for the first time.
         public override void _Ready()
         {
+            PlayerEventBus.Instance.Connect("PlayerShot", this, "OnPlayerShot");
             _missileSoundPlayer = GetNode<AudioPlayer>("AudioStreamPlayer");
             ProjectileDirection = -1;
             base._Ready();
@@ -41,6 +43,11 @@ namespace Game.Bullet
             {
                 ResetProjectile();
             }
+        }
+
+        public void OnPlayerShot()
+        {
+            ResetProjectile();
         }
     }
 }

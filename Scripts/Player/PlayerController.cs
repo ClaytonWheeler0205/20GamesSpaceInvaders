@@ -1,3 +1,4 @@
+using Game.Bus;
 using Godot;
 using System;
 using Util.ExtensionMethods;
@@ -7,6 +8,12 @@ namespace Game.Player
 
     public class PlayerController : ShipController
     {
+
+        public override void _Ready()
+        {
+            PlayerEventBus.Instance.Connect("PlayerShot", this, "OnPlayerShot");
+            PlayerEventBus.Instance.Connect("PlayerRespawn", this, "OnPlayerRespawn");
+        }
 
         public override void _Process(float delta)
         {
@@ -31,6 +38,16 @@ namespace Game.Player
                     ShipProjectile.FireProjectile();
                 }
             }
+        }
+
+        public void OnPlayerShot()
+        {
+            IsControllerActive = false;
+        }
+
+        public void OnPlayerRespawn()
+        {
+            IsControllerActive = true;
         }
     }
 }

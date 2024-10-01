@@ -1,5 +1,6 @@
 using Game.Alien;
 using Game.Bullet;
+using Game.Bus;
 using Game.SFX;
 using Godot;
 using System;
@@ -21,6 +22,8 @@ namespace Game
         // Called when the node enters the scene tree for the first time.
         public override void _Ready()
         {
+            PlayerEventBus.Instance.Connect("PlayerShot", this, "OnPlayerShot");
+            PlayerEventBus.Instance.Connect("PlayerRespawn", this, "OnPlayerRespawn");
             SetNodeReferences();
             if (_bulletManager.IsValid())
             {
@@ -65,6 +68,16 @@ namespace Game
             {
                 EmitSignal(nameof(AliensCleared));
             }
+        }
+
+        public void OnPlayerShot()
+        {
+            _movementTimer.Stop();
+        }
+
+        public void OnPlayerRespawn()
+        {
+            _movementTimer.Start(_alienInvaders.AliensCount / 60.0f);
         }
     }
 }

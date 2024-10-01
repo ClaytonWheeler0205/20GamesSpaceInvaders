@@ -1,3 +1,4 @@
+using Game.Bus;
 using Godot;
 using System;
 using System.Drawing.Imaging;
@@ -18,6 +19,7 @@ namespace Game.Bullet
         // Called when the node enters the scene tree for the first time.
         public override void _Ready()
         {
+            PlayerEventBus.Instance.Connect("PlayerShot", this, "OnPlayerShot");
             _bulletSprite = GetNode<AnimatedSprite>("AnimatedSprite");
             ProjectileDirection = 1;
             base._Ready();
@@ -54,6 +56,11 @@ namespace Game.Bullet
                 GetNode("/root").AddChild(particleEffect);
                 ResetProjectile();
             }
+        }
+
+        public void OnPlayerShot()
+        {
+            ResetProjectile();
         }
     }
 }
