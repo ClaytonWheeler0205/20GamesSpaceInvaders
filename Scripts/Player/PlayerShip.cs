@@ -20,6 +20,7 @@ namespace Game.Player
         // Called when the node enters the scene tree for the first time.
         public override void _Ready()
         {
+            PlayerEventBus.Instance.Connect("PlayerRespawn", this, "OnPlayerRespawn");
             SetNodeReferences();
             CheckNodeReferences();
             _startPosition = Position;
@@ -68,7 +69,6 @@ namespace Game.Player
 
         private async void PlayerShot()
         {
-            GD.Print("Player got shot!");
             Visible = false;
             _currentDirection = 0;
             PlayerEventBus.Instance.EmitSignal("PlayerShot");
@@ -80,9 +80,13 @@ namespace Game.Player
             Node2D playerExplosion = _playerExplosionEffect.Instance<Node2D>();
             playerExplosion.GlobalPosition = GlobalPosition;
             GetNode("/root").AddChild(playerExplosion);
-            await ToSignal(GetTree().CreateTimer(4.5f), "timeout");
+            await ToSignal(GetTree().CreateTimer(1.5f), "timeout");
+            LivesEventBus.Instance.EmitSignal("LoseLife");
+        }
+
+        public void OnPlayerRespawn()
+        {
             ResetShip();
-            PlayerEventBus.Instance.EmitSignal("PlayerRespawn");
         }
     }
 }
