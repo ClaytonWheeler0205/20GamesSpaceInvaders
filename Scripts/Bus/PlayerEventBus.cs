@@ -16,6 +16,9 @@ namespace Game.Bus
         public delegate void AlienHit();
 
         [Signal]
+        public delegate void AlienHitGround();
+
+        [Signal]
         public delegate void PlayerRespawn();
 
         public override void _Ready()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scenes/AlienInvaders.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/Game/AlienManager.cs" type="Script" id=2]
@@ -7,6 +7,9 @@
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 24, 300 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 463, 32 )
 
 [node name="AlienManager" type="Node"]
 script = ExtResource( 2 )
@@ -40,4 +43,13 @@ script = ExtResource( 3 )
 
 [node name="BulletManager" parent="." instance=ExtResource( 4 )]
 
+[node name="Ground" type="Area2D" parent="."]
+position = Vector2( -3, 266 )
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
+position = Vector2( 4, 0 )
+shape = SubResource( 2 )
+
 [connection signal="timeout" from="MovementTimer" to="." method="OnMovementTimerTimeout"]
+[connection signal="area_entered" from="Ground" to="AlienInvaders" method="OnAlienAreaEntered"]

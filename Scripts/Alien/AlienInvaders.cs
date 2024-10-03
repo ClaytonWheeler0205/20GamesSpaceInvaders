@@ -1,3 +1,4 @@
+using Game.Bus;
 using Godot;
 using System;
 using Util.ExtensionMethods;
@@ -11,6 +12,10 @@ namespace Game.Alien
 
         private const float DELTA_X = 16f;
         private const float DELTA_Y = 20f;
+
+        private const string ALIEN_NODE_GROUP = "Alien";
+
+        private bool _alienHitGround = false;
 
         private Godot.Collections.Array<ColumnBase> _alienColumns;
 
@@ -171,6 +176,15 @@ namespace Game.Alien
         public void OnColumnAlienDestroyed()
         {
             SetAliensCount(AliensCount - 1);
+        }
+
+        public void OnAlienAreaEntered(Area2D area)
+        {
+            if (area.IsInGroup(ALIEN_NODE_GROUP) && !_alienHitGround)
+            {
+                _alienHitGround = true;
+                PlayerEventBus.Instance.EmitSignal("AlienHitGround");
+            }
         }
     }
 }

@@ -22,6 +22,7 @@ namespace Game.Player
         public override void _Ready()
         {
             PlayerEventBus.Instance.Connect("PlayerRespawn", this, "OnPlayerRespawn");
+            PlayerEventBus.Instance.Connect("AlienHitGround", this, "OnAlienHitGround");
             SetNodeReferences();
             CheckNodeReferences();
             _startPosition = Position;
@@ -70,6 +71,11 @@ namespace Game.Player
             {
                 PlayerHitAlien();
             }
+        }
+
+        public void OnAlienHitGround()
+        {
+            PlayerHitAlien();
         }
 
         private async void PlayerShot()
