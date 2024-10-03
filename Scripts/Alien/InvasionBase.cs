@@ -1,3 +1,4 @@
+using System.Runtime;
 using Godot;
 
 namespace Game.Alien
@@ -13,6 +14,8 @@ namespace Game.Alien
         public abstract void ResetInvasion();
 
         public abstract ColumnBase GetRandomActiveColumn();
+
+        public abstract ColumnBase GetColumnOverPlayer();
 
         protected void SetAliensCount(int count)
         {

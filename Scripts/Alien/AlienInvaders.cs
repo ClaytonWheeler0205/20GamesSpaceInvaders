@@ -113,6 +113,11 @@ namespace Game.Alien
             return activeColumn;
         }
 
+        public override ColumnBase GetColumnOverPlayer()
+        {
+            return null;
+        }
+
         private bool ActiveColumnPresent()
         {
             foreach (ColumnBase column in _alienColumns)
