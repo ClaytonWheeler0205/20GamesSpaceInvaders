@@ -8,6 +8,8 @@ public class ScoreManager : Control
     private Label _scoreLabelReference;
 
     private int _score = 0;
+    private int _pointsToNextLife = 1500;
+    private const int POINTS_TO_NEXT_LIFE_INCREMENT = 1500;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -62,5 +64,11 @@ public class ScoreManager : Control
     {
         _score += pointsToGive;
         UpdateScore();
+        if (_score >= _pointsToNextLife)
+        {
+            LivesEventBus.Instance.EmitSignal("GainLife");
+            // Play a life up sound effect
+            _pointsToNextLife += POINTS_TO_NEXT_LIFE_INCREMENT;
+        }
     }
 }

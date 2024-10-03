@@ -1,3 +1,4 @@
+using Game.Bus;
 using Godot;
 using System;
 using Util.ExtensionMethods;
@@ -19,6 +20,7 @@ namespace Game
         {
             SetNodeReferences();
             CheckNodeReferences();
+            PlayerEventBus.Instance.Connect("AlienHit", this, "OnGameOver");
             _alienManager.StartGame();
             _playerManager.StartGame();
             _livesManager.StartGame();

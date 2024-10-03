@@ -14,6 +14,7 @@ namespace Game.Player
         private float _currentDirection;
 
         private const string BULLET_NODE_GROUP = "Bullet";
+        private const string ALIEN_NODE_GROUP = "Alien";
 
         private PackedScene _playerExplosionEffect = GD.Load<PackedScene>("res://Scenes/PlayerExplosion.tscn");
 
@@ -65,23 +66,39 @@ namespace Game.Player
             {
                 PlayerShot();
             }
+            else if (area.IsInGroup(ALIEN_NODE_GROUP))
+            {
+                PlayerHitAlien();
+            }
         }
 
         private async void PlayerShot()
         {
+            ExplodePlayer();
+            PlayerEventBus.Instance.EmitSignal("PlayerShot");
+            await ToSignal(GetTree().CreateTimer(1.5f), "timeout");
+            LivesEventBus.Instance.EmitSignal("LoseLife");
+        }
+
+        private async void PlayerHitAlien()
+        {
+            ExplodePlayer();
+            PlayerEventBus.Instance.EmitSignal("PlayerShot");
+            await ToSignal(GetTree().CreateTimer(4.5f), "timeout");
+            PlayerEventBus.Instance.EmitSignal("AlienHit");
+        }
+
+        private void ExplodePlayer()
+        {
             Visible = false;
             _currentDirection = 0;
-            PlayerEventBus.Instance.EmitSignal("PlayerShot");
             if (_audioStreamPlayer.IsValid())
             {
                 _audioStreamPlayer.Play();
             }
-            // Create a explosion particle effect
             Node2D playerExplosion = _playerExplosionEffect.Instance<Node2D>();
             playerExplosion.GlobalPosition = GlobalPosition;
             GetNode("/root").AddChild(playerExplosion);
-            await ToSignal(GetTree().CreateTimer(1.5f), "timeout");
-            LivesEventBus.Instance.EmitSignal("LoseLife");
         }
 
         public void OnPlayerRespawn()

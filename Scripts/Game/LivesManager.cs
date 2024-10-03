@@ -10,6 +10,7 @@ namespace Game
     {
         // Node References
         private Label _livesLabelReference;
+        private AudioStreamPlayer _audioStreamPlayer;
 
         private const int STARTING_LIVES = 3;
         private int _currentLives = 0;
@@ -21,6 +22,7 @@ namespace Game
         public override void _Ready()
         {
             LivesEventBus.Instance.Connect("LoseLife", this, "OnLoseLife");
+            LivesEventBus.Instance.Connect("GainLife", this, "OnGainLife");
             SetNodeReferences();
             CheckNodeReferences();
         }
@@ -28,6 +30,7 @@ namespace Game
         private void SetNodeReferences()
         {
             _livesLabelReference = GetNode<Label>("LivesLabel");
+            _audioStreamPlayer = GetNode<AudioStreamPlayer>("AudioStreamPlayer");
         }
 
         private void CheckNodeReferences()
@@ -66,6 +69,13 @@ namespace Game
                 await ToSignal(GetTree().CreateTimer(3.0f), "timeout");
                 PlayerEventBus.Instance.EmitSignal("PlayerRespawn");
             }
+        }
+
+        public void OnGainLife()
+        {
+            _currentLives++;
+            _livesLabelReference.Text = $"Lives: {_currentLives}";
+            _audioStreamPlayer.Play();
         }
     }
 }
