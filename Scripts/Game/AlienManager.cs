@@ -13,6 +13,7 @@ namespace Game
     {
         private InvasionBase _alienInvaders;
         private Timer _movementTimer;
+        private Timer _shootingTimer;
         private AudioPlayer _movementSoundPlayer;
         private BulletManagerBase _bulletManager;
 
@@ -36,6 +37,7 @@ namespace Game
         {
             _alienInvaders = GetNode<InvasionBase>("AlienInvaders");
             _movementTimer = GetNode<Timer>("MovementTimer");
+            _shootingTimer = GetNode<Timer>("ShootingTimer");
             _movementSoundPlayer = GetNode<AudioPlayer>("MovementSoundPlayer");
             _bulletManager = GetNode<BulletManagerBase>("BulletManager");
         }
@@ -44,6 +46,7 @@ namespace Game
         {
             _alienInvaders.Visible = true;
             _movementTimer.Start(_alienInvaders.AliensCount / 60.0f);
+            _shootingTimer.Start(_alienInvaders.AliensCount / 60.0f);
             return true;
         }
 
@@ -52,6 +55,8 @@ namespace Game
             _alienInvaders.Visible = false;
             _alienInvaders.ResetInvasion();
             _bulletManager.ResetShots();
+            _movementTimer.Stop();
+            _shootingTimer.Stop();
             return true;
         }
 
@@ -59,7 +64,6 @@ namespace Game
         {
             if (_alienInvaders.AliensCount > 0)
             {
-                _bulletManager.Fire();
                 _alienInvaders.Move();
                 _movementSoundPlayer.PlaySound("move");
                 _movementTimer.Start(_alienInvaders.AliensCount / 60.0f);
@@ -70,14 +74,29 @@ namespace Game
             }
         }
 
+        public void OnShootingTimerTimeout()
+        {
+            if (_alienInvaders.AliensCount > 0)
+            {
+                _bulletManager.Fire();
+                GD.Randomize();
+                float randomDenominator = (float)GD.RandRange(30.0, 60.0);
+                _shootingTimer.Start(_alienInvaders.AliensCount / randomDenominator);
+            }
+        }
+
         public void OnPlayerShot()
         {
             _movementTimer.Stop();
+            _shootingTimer.Stop();
         }
 
         public void OnPlayerRespawn()
         {
             _movementTimer.Start(_alienInvaders.AliensCount / 60.0f);
+            GD.Randomize();
+            float randomDenominator = (float)GD.RandRange(30.0, 60.0);
+            _shootingTimer.Start(_alienInvaders.AliensCount / randomDenominator);
         }
     }
 }

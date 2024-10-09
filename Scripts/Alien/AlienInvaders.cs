@@ -115,6 +115,14 @@ namespace Game.Alien
 
         public override ColumnBase GetColumnOverPlayer()
         {
+            foreach (ColumnBase column in _alienColumns)
+            {
+                if (column.IsOverPlayer())
+                {
+                    return column;
+                }
+            }
+
             return null;
         }
 

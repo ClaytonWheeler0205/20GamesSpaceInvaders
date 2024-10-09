@@ -9,10 +9,12 @@ namespace Game.Alien
     {
         private Godot.Collections.Array<AlienBase> _aliens;
         private CollisionShape2D _columnCollision;
+        private RayCast2D _playerDetector;
 
         private int _aliensCount = 0;
 
         private const string EDGE_NODE_GROUP = "Edge";
+        private const string PLAYER_NODE_GROUP = "Player";
 
         // Called when the node enters the scene tree for the first time.
         public override void _Ready()
@@ -37,7 +39,7 @@ namespace Game.Alien
                     AlienBase alien = aliensNode.GetChild(i) as AlienBase;
                     if (alien.IsValid())
                     {
-                        _aliens.Add(alien); 
+                        _aliens.Add(alien);
                     }
                 }
                 _aliensCount = _aliens.Count;
@@ -62,6 +64,7 @@ namespace Game.Alien
         private void SetNodeReferences()
         {
             _columnCollision = GetNode<CollisionShape2D>("CollisionShape2D");
+            _playerDetector = GetNode<RayCast2D>("RayCast2D");
         }
 
         private void CheckNodeReferences()
@@ -69,6 +72,10 @@ namespace Game.Alien
             if (!_columnCollision.IsValid())
             {
                 GD.PrintErr("ERROR: Alien column collision node is not valid!");
+            }
+            if (!_playerDetector.IsValid())
+            {
+                GD.PrintErr("ERROR: Player detector node is not valid!");
             }
         }
 
@@ -113,6 +120,18 @@ namespace Game.Alien
             foreach (AlienBase alien in _aliens)
             {
                 alien.SetActive(newActiveState);
+            }
+        }
+
+        public override bool IsOverPlayer()
+        {
+            if (!IsActive) { return false;}
+
+            Node collisionNode = _playerDetector.GetCollider() as Node;
+            if (collisionNode == null) {return false;}
+            else
+            {
+                return collisionNode.IsInGroup(PLAYER_NODE_GROUP);
             }
         }
 

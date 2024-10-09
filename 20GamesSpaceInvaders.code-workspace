@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"godotTools.editorPath.godot3": "d:\\Tools\\Engines\\Godot\\Godot_v3.5.3-stable_mono_win64\\Godot_v3.5.3-stable_mono_win64.exe",
+		"files.exclude": {
+			"**/*.rpyc": true,
+			"**/*.rpa": true,
+			"**/*.rpymc": true,
+			"**/cache/": true
+		}
+	}
+}

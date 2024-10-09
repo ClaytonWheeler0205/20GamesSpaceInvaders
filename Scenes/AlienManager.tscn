@@ -51,5 +51,9 @@ collision_mask = 4
 position = Vector2( 4, 0 )
 shape = SubResource( 2 )
 
+[node name="ShootingTimer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="timeout" from="MovementTimer" to="." method="OnMovementTimerTimeout"]
 [connection signal="area_entered" from="Ground" to="AlienInvaders" method="OnAlienAreaEntered"]
+[connection signal="timeout" from="ShootingTimer" to="." method="OnShootingTimerTimeout"]

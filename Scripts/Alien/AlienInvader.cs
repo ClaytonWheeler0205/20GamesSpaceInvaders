@@ -96,7 +96,6 @@ namespace Game.Alien
             // If the node isn't active, it can't shoot
             if (!IsActive)
             {
-                GD.Print("Alien is not active");
                 return false;
             }
 

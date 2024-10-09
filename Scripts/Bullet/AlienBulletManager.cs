@@ -14,7 +14,7 @@ namespace Game.Bullet
 
         private const int STANDARD_BULLET_SPEED = 334;
         private const int FASTER_BULLET_SPEED = 417;
-        private const int BULLET_COUNT = 2;
+        private const int BULLET_COUNT = 3;
 
         // Called when the node enters the scene tree for the first time.
         public override void _Ready()
@@ -27,6 +27,7 @@ namespace Game.Bullet
         {
             _squigglyShot = GetNode<Projectile>("SquiggleShot");
             _plungerShot = GetNode<Projectile>("PlungerShot");
+            _rollingShot = GetNode<Projectile>("RollingShot");
         }
 
         private void CheckNodeReferences()
@@ -38,6 +39,10 @@ namespace Game.Bullet
             if (!_plungerShot.IsValid())
             {
                 GD.PrintErr("ERROR: plunger shot node in not valid!");
+            }
+            if (!_rollingShot.IsValid())
+            {
+                GD.PrintErr("ERROR: rolling shot node is not valid!");
             }
         }
 
@@ -52,6 +57,9 @@ namespace Game.Bullet
                 case 1:
                     FirePlungerShot();
                     break;
+                case 2:
+                    FireRollingShot();
+                    break;
             }
         }
 
@@ -59,6 +67,7 @@ namespace Game.Bullet
         {
             _squigglyShot.ResetProjectile();
             _plungerShot.ResetProjectile();
+            _rollingShot.ResetProjectile();
         }
 
         private void FireSquiggleShot()
@@ -79,6 +88,7 @@ namespace Game.Bullet
                     if (randomColumn != null)
                     {
                         _squigglyShot.SetBulletPosition(randomColumn.GetShootingAlien());
+                        _squigglyShot.FireProjectile();
                     }
                 }
                 catch (InvalidOperationException ex)
@@ -86,7 +96,6 @@ namespace Game.Bullet
                     GD.Print(ex.Message);
                     return;
                 }
-                _squigglyShot.FireProjectile();
             }
         }
 
@@ -96,7 +105,7 @@ namespace Game.Bullet
             {
                 if (alienInvaders.AliensCount == 1)
                 {
-                    //FireRollingShot();
+                    FireRollingShot();
                     return;
                 }
                 else if (alienInvaders.AliensCount > 8)
@@ -113,6 +122,7 @@ namespace Game.Bullet
                     if (randomColumn != null)
                     {
                         _plungerShot.SetBulletPosition(randomColumn.GetShootingAlien());
+                        _plungerShot.FireProjectile();
                     }
                 }
                 catch (InvalidOperationException ex)
@@ -120,7 +130,6 @@ namespace Game.Bullet
                     GD.Print(ex.Message);
                     return;
                 }
-                _plungerShot.FireProjectile();
             }
         }
 
@@ -134,15 +143,16 @@ namespace Game.Bullet
                 }
                 else
                 {
-                    // set projectile speed to FASTER_BULLET_SPEED
                     _rollingShot.ProjectileSpeed = FASTER_BULLET_SPEED;
                 }
-                // Set the columnBase to be the column over the player
                 ColumnBase targetColumn = alienInvaders.GetColumnOverPlayer();
                 try
                 {
-                    // set rolling shot's position to targetColumn.GetShootingAlien()
-                    _rollingShot.SetBulletPosition(targetColumn.GetShootingAlien());
+                    if (targetColumn != null)
+                    {
+                        _rollingShot.SetBulletPosition(targetColumn.GetShootingAlien());
+                        _rollingShot.FireProjectile();
+                    }
                 }
                 catch (InvalidOperationException ex)
                 {

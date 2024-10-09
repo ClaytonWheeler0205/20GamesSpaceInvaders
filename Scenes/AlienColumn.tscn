@@ -33,4 +33,11 @@ position = Vector2( 0, 160 )
 position = Vector2( 0, 80 )
 shape = SubResource( 1 )
 
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2( 0, 180 )
+enabled = true
+cast_to = Vector2( 0, 300 )
+collide_with_areas = true
+collide_with_bodies = false
+
 [connection signal="area_entered" from="." to="." method="OnColumnAreaEntered"]

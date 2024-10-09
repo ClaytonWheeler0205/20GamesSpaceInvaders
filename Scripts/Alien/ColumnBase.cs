@@ -23,6 +23,8 @@ namespace Game.Alien
 
         public abstract Vector2 GetShootingAlien();
 
+        public abstract bool IsOverPlayer();
+
         public abstract void SetActiveStatus(bool newActiveState);
     }
 }
