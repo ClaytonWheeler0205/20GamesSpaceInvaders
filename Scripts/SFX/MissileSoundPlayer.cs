@@ -15,6 +15,10 @@ namespace Game.SFX
             {
                 case "missile_fire":
                     SoundToPlay = _missileFireSFX;
+                    PitchScale = (float)GD.RandRange(0.75, 1.25);
+                    break;
+                default:
+                    PitchScale = 1.0f;
                     break;
             }
             base.PlaySound(audio);

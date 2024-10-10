@@ -17,6 +17,10 @@ namespace Game
         private AudioPlayer _movementSoundPlayer;
         private BulletManagerBase _bulletManager;
 
+        private float _minShootCooldown = 0.02f;
+        private float _maxShootCooldown = 1.0f;
+        private const int ALIEN_COUNT_MAX = 55;
+
         [Signal]
         public delegate void AliensCleared();
 
@@ -46,7 +50,7 @@ namespace Game
         {
             _alienInvaders.Visible = true;
             _movementTimer.Start(_alienInvaders.AliensCount / 60.0f);
-            _shootingTimer.Start(_alienInvaders.AliensCount / 60.0f);
+            _shootingTimer.Start(_maxShootCooldown);
             return true;
         }
 
@@ -79,9 +83,8 @@ namespace Game
             if (_alienInvaders.AliensCount > 0)
             {
                 _bulletManager.Fire();
-                GD.Randomize();
-                float randomDenominator = (float)GD.RandRange(30.0, 60.0);
-                _shootingTimer.Start(_alienInvaders.AliensCount / randomDenominator);
+                float maximumCooldown = Mathf.Lerp(_minShootCooldown * 4, _maxShootCooldown, _alienInvaders.AliensCount / (float)ALIEN_COUNT_MAX);
+                _shootingTimer.Start((float)GD.RandRange(_minShootCooldown, maximumCooldown));
             }
         }
 
@@ -94,9 +97,7 @@ namespace Game
         public void OnPlayerRespawn()
         {
             _movementTimer.Start(_alienInvaders.AliensCount / 60.0f);
-            GD.Randomize();
-            float randomDenominator = (float)GD.RandRange(30.0, 60.0);
-            _shootingTimer.Start(_alienInvaders.AliensCount / randomDenominator);
+            _shootingTimer.Start(_maxShootCooldown);
         }
     }
 }

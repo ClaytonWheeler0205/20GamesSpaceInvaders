@@ -118,6 +118,7 @@ namespace Game.Alien
             {
                 SetActive(false);
                 PlayExplosionEffect();
+                _audioStreamPlayer.PitchScale = (float)GD.RandRange(0.75, 1.25);
                 _audioStreamPlayer.Play();
                 EmitSignal("AlienDestroyed");
                 ScoreEventBus.Instance.EmitSignal("AwardPoints", _pointValue);
