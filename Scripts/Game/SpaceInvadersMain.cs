@@ -2,6 +2,7 @@ using Game.Bus;
 using Godot;
 using System;
 using Util.ExtensionMethods;
+using Util;
 
 namespace Game
 {
@@ -25,7 +26,7 @@ namespace Game
             _playerManager.StartGame();
             _livesManager.StartGame();
         }
-
+        
         private void SetNodeReferences()
         {
             _alienManager = GetNode<IGameManager>("AlienManager");
