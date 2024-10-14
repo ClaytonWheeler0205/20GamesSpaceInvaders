@@ -1,11 +1,15 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Scenes/Mothership.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scripts/Game/MothershipManager.cs" type="Script" id=2]
 
 [node name="MothershipManager" type="Node"]
+script = ExtResource( 2 )
 
 [node name="Mothership" parent="." instance=ExtResource( 1 )]
 position = Vector2( -550, -225 )
 
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="OnMothershipTimerTimeout"]

@@ -1,6 +1,8 @@
+using Game.Bus;
 using Godot;
 using System;
 using Util;
+using Util.ExtensionMethods;
 
 namespace Game.Alien
 {
@@ -25,12 +27,38 @@ namespace Game.Alien
 
         private const string MISSILE_NODE_GROUP = "Missile";
 
-        [Signal]
-        public delegate void MothershipInactive();
+        private AudioStreamPlayer _explosionSFX;
+        private AudioStreamPlayer _movementSFX;
+
+        private PackedScene _explosionVFX = GD.Load<PackedScene>("res://Scenes/MothershipExplosion.tscn");
+
+        private const int MINIMUM_POINT_VALUE = 5;
+        private const int MAXIMUM_POINT_VALUE = 30;
+        private const int POINT_MULTIPLIER = 10;
 
         public override void _Ready()
         {
+            SetNodeReferences();
+            CheckNodeReferences();
             ResetShip();
+        }
+
+        private void SetNodeReferences()
+        {
+            _explosionSFX = GetNode<AudioStreamPlayer>("SFXPlayers/ExplosionPlayer");
+            _movementSFX = GetNode<AudioStreamPlayer>("SFXPlayers/MovementPlayer");
+        }
+
+        private void CheckNodeReferences()
+        {
+            if (!_explosionSFX.IsValid())
+            {
+                GD.PrintErr("ERROR: Explosion audio stream player node is not valid!");
+            }
+            if (!_movementSFX.IsValid())
+            {
+                GD.PrintErr("ERROR: Movement sound player node is not valid!");
+            }
         }
 
         public override void _Process(float delta)
@@ -56,6 +84,7 @@ namespace Game.Alien
         {
             _isActive = true;
             Visible = true;
+            _movementSFX.Play();
         }
 
         public void ResetShip()
@@ -63,6 +92,7 @@ namespace Game.Alien
             _isActive = false;
             Visible = false;
             ResetShipPosition();
+            _movementSFX.Stop();
         }
 
         private void ResetShipPosition()
@@ -85,15 +115,30 @@ namespace Game.Alien
         {
             if (area.IsInGroup(MISSILE_NODE_GROUP))
             {
+                _explosionSFX.PitchScale = (float)GD.RandRange(0.75, 1.25);
+                _explosionSFX.Play();
+                PlayExplosionEffect();
+                GivePoints();
                 ResetShip();
-                EmitSignal(nameof(MothershipInactive));
             }
+        }
+
+        private void PlayExplosionEffect()
+        {
+            Node2D explosionEffect = _explosionVFX.Instance<Node2D>();
+            explosionEffect.GlobalPosition = GlobalPosition;
+            GetNode("/root").AddChild(explosionEffect);
+        }
+
+        private void GivePoints()
+        {
+            int points = GDRandom.RandiRange(MINIMUM_POINT_VALUE, MAXIMUM_POINT_VALUE) * POINT_MULTIPLIER;
+            ScoreEventBus.Instance.EmitSignal("AwardPoints", points);
         }
 
         public void OnScreenExited()
         {
             ResetShip();
-            EmitSignal(nameof(MothershipInactive));
         }
     }
 }

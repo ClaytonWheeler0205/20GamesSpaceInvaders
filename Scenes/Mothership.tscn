@@ -1,7 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Sprites/Mothership.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Alien/Mothership.cs" type="Script" id=2]
+[ext_resource path="res://Audio/alien_explosion.wav" type="AudioStream" id=3]
+[ext_resource path="res://Audio/mothership_move.wav" type="AudioStream" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 32, 14 )
@@ -24,7 +26,14 @@ shape = SubResource( 1 )
 position = Vector2( 1.90735e-06, -7.15256e-07 )
 scale = Vector2( 3.2, 1.4 )
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="SFXPlayers" type="Node" parent="."]
+
+[node name="MovementPlayer" type="AudioStreamPlayer" parent="SFXPlayers"]
+stream = ExtResource( 4 )
+
+[node name="ExplosionPlayer" type="AudioStreamPlayer" parent="SFXPlayers"]
+stream = ExtResource( 3 )
+volume_db = -2.0
 
 [connection signal="area_entered" from="." to="." method="OnMothershipAreaEntered"]
 [connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="OnScreenExited"]

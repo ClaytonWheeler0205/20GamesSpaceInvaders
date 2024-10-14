@@ -3,6 +3,7 @@ using Godot;
 using System;
 using Util.ExtensionMethods;
 using Util;
+using System.Drawing.Printing;
 
 namespace Game
 {
@@ -13,6 +14,7 @@ namespace Game
         private IGameManager _alienManager;
         private IGameManager _playerManager;
         private IGameManager _livesManager;
+        private IGameManager _mothershipManager;
 
         private Control _gameOverLabel;
 
@@ -24,6 +26,7 @@ namespace Game
             PlayerEventBus.Instance.Connect("AlienHit", this, "OnGameOver");
             _alienManager.StartGame();
             _playerManager.StartGame();
+            _mothershipManager.StartGame();
             _livesManager.StartGame();
         }
         
@@ -32,6 +35,7 @@ namespace Game
             _alienManager = GetNode<IGameManager>("AlienManager");
             _playerManager = GetNode<IGameManager>("PlayerManager");
             _livesManager = GetNode<IGameManager>("GUI/LivesManager");
+            _mothershipManager = GetNode<IGameManager>("MothershipManager");
             _gameOverLabel = GetNode<Control>("GUI/GameOverLabel");
         }
 
@@ -59,6 +63,17 @@ namespace Game
                 GetTree().Quit();
             }
 
+            if (!(_mothershipManager is Node mothershipNode))
+            {
+                GD.PrintErr("ERROR: Mothership manager is not a node!");
+                GetTree().Quit();
+            }
+            else if (!mothershipNode.IsValid())
+            {
+                GD.PrintErr("ERROR: Mothership manager node is not valid!");
+                GetTree().Quit();
+            }
+
             if (!(_livesManager is Node livesNode))
             {
                 GD.PrintErr("ERROR: Lives manager is not a node!");
@@ -81,9 +96,11 @@ namespace Game
         {
             _playerManager.EndGame();
             _alienManager.EndGame();
+            _mothershipManager.EndGame();
             await ToSignal(GetTree().CreateTimer(3.0f), "timeout");
             _alienManager.StartGame();
             _playerManager.StartGame();
+            _mothershipManager.StartGame();
         }
 
         public void OnGameOver()
@@ -91,6 +108,7 @@ namespace Game
             _gameOverLabel.Visible = true;
             _playerManager.EndGame();
             _alienManager.EndGame();
+            _mothershipManager.EndGame();
         }
     }
 }

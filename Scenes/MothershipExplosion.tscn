@@ -2,17 +2,17 @@
 
 [ext_resource path="res://Scripts/VFX/OneShotVFX.cs" type="Script" id=1]
 
-[node name="PlayerExplosion" type="CPUParticles2D"]
+[node name="MothershipExplosion" type="CPUParticles2D"]
 scale = Vector2( 2.5, 2.5 )
 emitting = false
-amount = 100
-lifetime = 1.5
+amount = 75
+lifetime = 0.46
 one_shot = true
 explosiveness = 1.0
 emission_shape = 1
 emission_sphere_radius = 1.0
 spread = 180.0
 gravity = Vector2( 0, 0 )
-initial_velocity = 15.0
-color = Color( 0.0901961, 0.976471, 0.152941, 1 )
+initial_velocity = 30.0
+color = Color( 1, 0, 0, 1 )
 script = ExtResource( 1 )
