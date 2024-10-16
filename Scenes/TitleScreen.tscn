@@ -1,0 +1,150 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Fonts/TitleText.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Sprites/Alien1_Frame0.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/Alien2_Frame0.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/Alien3_Frame0.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/Mothership.png" type="Texture" id=5]
+[ext_resource path="res://Scripts/UI/TitleScreen.cs" type="Script" id=6]
+
+[node name="TitleScreen" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 6 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -300.0
+margin_top = -262.5
+margin_right = 300.0
+margin_bottom = 262.5
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -284.0
+margin_top = -246.5
+margin_right = 284.0
+margin_bottom = 246.5
+color = Color( 0, 0, 0, 1 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect2"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Label" type="Label" parent="ColorRect2/VBoxContainer"]
+margin_right = 568.0
+margin_bottom = 77.0
+custom_fonts/font = ExtResource( 1 )
+text = "space invaders"
+align = 1
+valign = 1
+uppercase = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ColorRect2/VBoxContainer"]
+margin_top = 81.0
+margin_right = 568.0
+margin_bottom = 158.0
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="ColorRect2/VBoxContainer/HBoxContainer"]
+margin_left = 67.0
+margin_right = 115.0
+margin_bottom = 77.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource( 3 )
+stretch_mode = 6
+
+[node name="Label" type="Label" parent="ColorRect2/VBoxContainer/HBoxContainer"]
+margin_left = 119.0
+margin_right = 501.0
+margin_bottom = 77.0
+custom_fonts/font = ExtResource( 1 )
+text = " - 10 points"
+uppercase = true
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ColorRect2/VBoxContainer"]
+margin_top = 162.0
+margin_right = 568.0
+margin_bottom = 239.0
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="ColorRect2/VBoxContainer/HBoxContainer2"]
+margin_left = 66.0
+margin_right = 110.0
+margin_bottom = 77.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource( 2 )
+stretch_mode = 6
+
+[node name="Label" type="Label" parent="ColorRect2/VBoxContainer/HBoxContainer2"]
+margin_left = 114.0
+margin_right = 502.0
+margin_bottom = 77.0
+custom_fonts/font = ExtResource( 1 )
+text = " - 20 points"
+uppercase = true
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="ColorRect2/VBoxContainer"]
+margin_top = 243.0
+margin_right = 568.0
+margin_bottom = 320.0
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="ColorRect2/VBoxContainer/HBoxContainer3"]
+margin_left = 72.0
+margin_right = 104.0
+margin_bottom = 77.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource( 4 )
+stretch_mode = 6
+
+[node name="Label" type="Label" parent="ColorRect2/VBoxContainer/HBoxContainer3"]
+margin_left = 108.0
+margin_right = 496.0
+margin_bottom = 77.0
+custom_fonts/font = ExtResource( 1 )
+text = " - 30 points"
+uppercase = true
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="ColorRect2/VBoxContainer"]
+margin_top = 324.0
+margin_right = 568.0
+margin_bottom = 401.0
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="ColorRect2/VBoxContainer/HBoxContainer4"]
+margin_left = 24.0
+margin_right = 88.0
+margin_bottom = 77.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource( 5 )
+stretch_mode = 6
+
+[node name="Label" type="Label" parent="ColorRect2/VBoxContainer/HBoxContainer4"]
+modulate = Color( 0.92549, 0.109804, 0.141176, 1 )
+margin_left = 92.0
+margin_right = 543.0
+margin_bottom = 77.0
+custom_fonts/font = ExtResource( 1 )
+text = " - ?? mystery"
+uppercase = true
+
+[node name="Label2" type="Label" parent="ColorRect2/VBoxContainer"]
+margin_top = 405.0
+margin_right = 568.0
+margin_bottom = 482.0
+custom_fonts/font = ExtResource( 1 )
+text = "press space"
+align = 1
+valign = 1
+uppercase = true

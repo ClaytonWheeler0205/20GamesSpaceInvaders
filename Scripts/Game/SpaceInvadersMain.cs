@@ -24,12 +24,18 @@ namespace Game
             SetNodeReferences();
             CheckNodeReferences();
             PlayerEventBus.Instance.Connect("AlienHit", this, "OnGameOver");
+            StartGame();
+        }
+
+        private async void StartGame()
+        {
             _alienManager.StartGame();
-            _playerManager.StartGame();
             _mothershipManager.StartGame();
             _livesManager.StartGame();
+            await ToSignal(GetTree().CreateTimer(0.5f), "timeout");
+            _playerManager.StartGame();
         }
-        
+
         private void SetNodeReferences()
         {
             _alienManager = GetNode<IGameManager>("AlienManager");
@@ -103,12 +109,14 @@ namespace Game
             _mothershipManager.StartGame();
         }
 
-        public void OnGameOver()
+        public async void OnGameOver()
         {
             _gameOverLabel.Visible = true;
             _playerManager.EndGame();
             _alienManager.EndGame();
             _mothershipManager.EndGame();
+            await ToSignal(GetTree().CreateTimer(3.0f), "timeout");
+            GetTree().ChangeScene("res://Scenes/TitleScreen.tscn");
         }
     }
 }
