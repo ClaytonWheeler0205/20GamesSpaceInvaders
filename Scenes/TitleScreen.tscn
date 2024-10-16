@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Fonts/TitleText.tres" type="DynamicFont" id=1]
 [ext_resource path="res://Sprites/Alien1_Frame0.png" type="Texture" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Sprites/Alien3_Frame0.png" type="Texture" id=4]
 [ext_resource path="res://Sprites/Mothership.png" type="Texture" id=5]
 [ext_resource path="res://Scripts/UI/TitleScreen.cs" type="Script" id=6]
+[ext_resource path="res://Scenes/ScoreManager.tscn" type="PackedScene" id=7]
 
 [node name="TitleScreen" type="Control"]
 anchor_right = 1.0
@@ -148,3 +149,7 @@ text = "press space"
 align = 1
 valign = 1
 uppercase = true
+
+[node name="ScoreManager" parent="." instance=ExtResource( 7 )]
+margin_top = -10.5
+margin_bottom = -10.5
