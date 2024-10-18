@@ -57,6 +57,7 @@ fire={
 2d_physics/layer_4="AlienBullet"
 2d_physics/layer_5="Column"
 2d_physics/layer_6="Edge"
+2d_physics/layer_7="Bunker"
 
 [mono]
 

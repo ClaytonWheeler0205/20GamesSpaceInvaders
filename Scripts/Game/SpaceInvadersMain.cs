@@ -4,6 +4,8 @@ using System;
 using Util.ExtensionMethods;
 using Util;
 using System.Drawing.Printing;
+using Game.Bunker;
+using System.Runtime.CompilerServices;
 
 namespace Game
 {
@@ -15,6 +17,7 @@ namespace Game
         private IGameManager _playerManager;
         private IGameManager _livesManager;
         private IGameManager _mothershipManager;
+        private IBunkerBuilder _bunkerBuilder;
 
         private Control _gameOverLabel;
 
@@ -42,6 +45,7 @@ namespace Game
             _playerManager = GetNode<IGameManager>("PlayerManager");
             _livesManager = GetNode<IGameManager>("GUI/LivesManager");
             _mothershipManager = GetNode<IGameManager>("MothershipManager");
+            _bunkerBuilder = GetNode<IBunkerBuilder>("BunkerBuilder");
             _gameOverLabel = GetNode<Control>("GUI/GameOverLabel");
         }
 
@@ -80,6 +84,17 @@ namespace Game
                 GetTree().Quit();
             }
 
+            if (!(_bunkerBuilder is Node bunkerNode))
+            {
+                GD.PrintErr("ERROR: Bunker builder is not a node!");
+                GetTree().Quit();
+            }
+            else if (!bunkerNode.IsValid())
+            {
+                GD.PrintErr("ERROR: Bunker builder node is not valid!");
+                GetTree().Quit();
+            }
+
             if (!(_livesManager is Node livesNode))
             {
                 GD.PrintErr("ERROR: Lives manager is not a node!");
@@ -104,6 +119,7 @@ namespace Game
             _alienManager.EndGame();
             _mothershipManager.EndGame();
             await ToSignal(GetTree().CreateTimer(3.0f), "timeout");
+            _bunkerBuilder.RebuildBunkers();
             _alienManager.StartGame();
             _playerManager.StartGame();
             _mothershipManager.StartGame();

@@ -13,6 +13,7 @@ namespace Game.Bullet
 
         private const string PLAYER_NODE_GROUP = "Player";
         private const string MISSILE_NODE_GROUP = "Missile";
+        private const string BUNKER_NODE_GROUP = "Bunker";
 
         private PackedScene _bulletExplosionVFX = GD.Load<PackedScene>("res://Scenes/BulletExplosion.tscn");
 
@@ -45,7 +46,7 @@ namespace Game.Bullet
 
         public void OnBulletAreaEntered(Area2D area)
         {
-            if (area.IsInGroup(PLAYER_NODE_GROUP))
+            if (area.IsInGroup(PLAYER_NODE_GROUP)  || area.IsInGroup(BUNKER_NODE_GROUP))
             {
                 ResetProjectile();
             }
